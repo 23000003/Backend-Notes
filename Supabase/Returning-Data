@@ -1,0 +1,29 @@
+--PRINTS THE DATA FROM UR DATABASE (Refer from JS Docs)--
+
+        var y = 0;
+        async function readData() {
+            const x = parseInt(document.getElementById("ageVal").value);
+            const elem = document.getElementById("results");
+            
+            if(y == 1){
+                elem.innerHTML = "Names:";
+            }
+            let query;
+            if(document.getElementById("department").checked && document.getElementById("age").checked){
+                query = connection.from('Bruh').select('bruh_name').eq('bruh_department', 'DCISM').lt('age', x);
+            }else if (document.getElementById("age").checked){
+                query = connection.from('Bruh').select('bruh_name').lt('age', x);
+            }else{
+                query = connection.from('Bruh').select();
+            }
+            const {error, data} = await query;
+
+            if (data.length > 0) {
+                    data.forEach(item => {
+                        const listItem = document.createElement("li");
+                        listItem.textContent = item.bruh_name;
+                        elem.appendChild(listItem);
+                 });
+            }
+            y = 1;
+        }
