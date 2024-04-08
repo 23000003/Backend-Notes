@@ -1,0 +1,31 @@
+``INTRODUCTION TO GET YOUR DATABASE`` 
+    //JS
+    const {createClient} = supabase
+    const supa_API = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRsd3RucnZlZGd2aW5rbHRuaWllIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTIxMTM3MTIsImV4cCI6MjAyNzY4OTcxMn0.t6axb6t7JjDfbBgHDUG-U3XjPjoPpeD6TIaj6ZwsMeU"
+    const supa_url = "https://dlwtnrvedgvinkltniie.supabase.co"
+    const connection = createClient(supa_url, supa_API);
+    
+    //in html / head 
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script> // The link is found in JS/Docs/pick whichever from 2 links;
+
+````
+    console.log(connection); // Checks if it works
+
+
+//Inserts a data base on an input to ur Database
+   
+    async function buttonPress(){        
+        let x = document.getElementById("name").value;
+        let y = document.getElementById("department").value;
+
+                                        //insert takes an object
+        await connection.from('Bruh').insert({bruh_name:x, bruh_department: y})
+        const{error}=await connection.from('Bruh').delete().eq('id', 3) // deletes a specific "id" with the index ex. "3"
+
+        (refer to supabase JS Client for more built-in function type)
+   }
+
+
+== JS related ==
+async -> executes the function first before whats outside of the function
+await ->
