@@ -1,0 +1,56 @@
+ <button onclick="GG()">Read</button>
+
+    <ul id="list">
+        Names
+    </ul>
+
+    <label for="input">Name<input type="text" id="name"></label><br><br>
+    <label for="department">Department<input type="text" id="department"></label><br><br>
+    <label for="age">Age<input type="text" id="age"></label><br><br>
+    <button onclick="update()">Update</button>
+    <button onclick="sort()">Sort Data</button>
+    <script>
+        const {createClient} = supabase
+        const supa_API = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRsd3RucnZlZGd2aW5rbHRuaWllIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTIxMTM3MTIsImV4cCI6MjAyNzY4OTcxMn0.t6axb6t7JjDfbBgHDUG-U3XjPjoPpeD6TIaj6ZwsMeU"
+        const supa_url = "https://dlwtnrvedgvinkltniie.supabase.co"
+        const connection = createClient(supa_url, supa_API);
+
+        console.log(connection);
+
+        async function GG(){
+            const list = document.getElementById("list");
+            let {data, error} = await connection.from('Bruh').select();
+            let x;
+            for(x = 0; x < data.length; x++){
+                let i = x;
+                const liN = document.createElement("li");
+                const liD = document.createElement("li");
+                const liA = document.createElement("li");
+                const button = document.createElement("button");
+
+                liN.textContent = data[x].bruh_name;
+                liD.textContent = data[x].bruh_department;
+                liA.textContent = data[x].age;
+                button.innerHTML = "Select";
+
+                list.appendChild(liN);
+                list.appendChild(liD);
+                list.appendChild(liA);
+                list.appendChild(button);
+                console.log(data);
+                button.onclick = function(){
+                    document.getElementById("name").placeholder = data[i].bruh_name;
+                    document.getElementById("department").placeholder = data[i].bruh_department;
+                    document.getElementById("age").placeholder = data[i].age;
+                }
+            }
+        }
+
+        async function update(){
+            const name = document.getElementById("name").value;
+            const department = document.getElementById("department").value;
+            const age = document.getElementById("age").value;
+            const x = document.getElementById("name").placeholder;
+
+            let {error} = await connection.from('Bruh').update({bruh_name: name, bruh_department: department, age: age}).eq('bruh_name', x);
+        }
